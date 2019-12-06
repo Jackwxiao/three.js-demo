@@ -9,23 +9,35 @@
 	<body>
 		<script src="https://cdn.bootcss.com/three.js/r83/three.min.js"></script>
 		<script>
+        /*建立场景、相机和渲染器。
+            PerspectiveCamera（透视摄像机）第一个参数是视野角度（FOV）
+            第二个参数是长宽比;接下来的两个参数是近截面（near）和远截面（far）
+        */
 			var scene = new THREE.Scene();
 			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
-
+            // 渲染器
 			var renderer = new THREE.WebGLRenderer();
-			renderer.setSize( window.innerWidth, window.innerHeight );
-			document.body.appendChild( renderer.domElement );
+            //设置渲染器的尺寸
+            renderer.setSize( window.innerWidth, window.innerHeight );
+            //将renderer（渲染器）的dom元素（renderer.domElement）添加到HTML文档中。这就是渲染器用来显示场景给我们看的<canvas>元素
+            document.body.appendChild( renderer.domElement );
 
+            //创建一个立方体
 			var geometry = new THREE.BoxGeometry( 2, 2, 2 );
-			var material = new THREE.MeshBasicMaterial( { color: 0xffffff } );
-			var cube = new THREE.Mesh( geometry, material );
-			scene.add( cube );
+            //给它一个材质，让它有颜色
+            var material = new THREE.MeshBasicMaterial( { color: 0xffffff } );
+            //需要一个Mesh（网格）直接将网格对象放入到场景中，并让它在场景中自由移动
+            var cube = new THREE.Mesh( geometry, material );
+            //默认情况下，调用scene.add()的时候，物体将会被添加到(0,0,0)坐标
+            scene.add( cube );
+
 
 			camera.position.z = 5;
 
+            //渲染场景
 			var animate = function () {
 				requestAnimationFrame( animate );
-
+                //动起来
 				cube.rotation.x += 0.01;
 				cube.rotation.y += 0.01;
 
